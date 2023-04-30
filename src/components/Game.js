@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './Game.css'
+
 const Game = ({verifyLetter}) => {
   return (
     <div className='game'>
