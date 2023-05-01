@@ -18,6 +18,20 @@ const stages = [
   {id: 3, name: 'end'}
 ]
 
+const specTable = [
+  {normLetter: 'a', specLetter: 'ã'},
+  {normLetter: 'a', specLetter: 'â'},
+  {normLetter: 'a', specLetter: 'á'},
+  {normLetter: 'e', specLetter: 'é'},
+  {normLetter: 'e', specLetter: 'ê'},
+  {normLetter: 'i', specLetter: 'í'},
+  {normLetter: 'o', specLetter: 'ó'},
+  {normLetter: 'o', specLetter: 'ô'},
+  {normLetter: 'o', specLetter: 'õ'},
+  {normLetter: 'u', specLetter: 'ú'},
+  {normLetter: 'c', specLetter: 'ç'}
+]
+
 
 function App() {
 
@@ -73,8 +87,57 @@ function App() {
   // Process the letter input
   // ****** Colocar verificação de acentos aqui!!
   const verifyLetter = (letter) => {
-    console.log(letter)
+
+    const normalizedLetter = letter.toLowerCase()
+
+    // Check letter
+    if(guessedLetters.includes(normalizedLetter) || wrongLetters.includes(normalizedLetter)) {
+      return
+    }
+
+    specTable.map((item) => {
+      if(letters.includes(item.specLetter) && normalizedLetter === item.normLetter) {
+        setGuessedLetters((actualGuessdLetter) => [
+          ...actualGuessdLetter,
+          item.specLetter
+        ])
+      }
+    })
+
+    if(letters.includes(normalizedLetter)) {
+      setGuessedLetters((actualGuessdLetter) => [
+        ...actualGuessdLetter,
+        normalizedLetter
+      ])
+    } else {
+      setWrongLetters((actualWrongLetter) => [
+        ...actualWrongLetter,
+        normalizedLetter
+      ])
+    }
+
+    console.log(guessedLetters)
+    console.log(wrongLetters)
+
+
+
+
+
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // Restarts the game
   const retry = () => {
