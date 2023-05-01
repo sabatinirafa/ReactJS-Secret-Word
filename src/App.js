@@ -18,6 +18,8 @@ const stages = [
   {id: 3, name: 'end'}
 ]
 
+const guessesQty = 5
+
 const specTable = [
   {normLetter: 'a', specLetter: 'ã'},
   {normLetter: 'a', specLetter: 'â'},
@@ -44,18 +46,16 @@ function App() {
 
   const [guessedLetters, setGuessedLetters] = useState([])
   const [wrongLetters, setWrongLetters] = useState([])
-  const [guesses, setGuesses] = useState(5)
+  const [guesses, setGuesses] = useState(guessesQty)
   const [score, setScore] = useState(0)
 
   const pickedWordAndCategory = () => {
     // Pick random category
     const categories = Object.keys(words) // ['carro', 'fruta', ...]
     const category = categories[Math.floor(Math.random() * Object.keys(categories).length)]
-    console.log(category)
 
     // Pick random word
     const word = words[category][Math.floor(Math.random() * words[category].length)]
-    console.log(word)
 
     return {word, category}
   }
@@ -72,9 +72,6 @@ function App() {
     wordLetters = wordLetters.map((i) => (
       i.toLowerCase()
     ))
-
-    console.log(word, category)
-    console.log(wordLetters)
 
     // Fill state
     setPickedWord(word)
@@ -114,33 +111,33 @@ function App() {
         ...actualWrongLetter,
         normalizedLetter
       ])
+
+      setGuesses((actualGuesses) => actualGuesses - 1)
     }
-
-    console.log(guessedLetters)
-    console.log(wrongLetters)
-
-
-
-
-
   }
 
+  const clearLetterStates = () => {
+    setGuessedLetters([])
+    setWrongLetters([])
+  }
 
+  useEffect(() => {
 
+    if(guesses <= 0) {
 
+      clearLetterStates()
 
+      setGameStage(stages[2].name)
+    }
 
-
-
-
-
-
-
-
-
+  }, [guesses])
 
   // Restarts the game
   const retry = () => {
+
+    setScore(0)
+    setGuesses(guessesQty)
+
     setGameStage(stages[0].name)
   }
 
