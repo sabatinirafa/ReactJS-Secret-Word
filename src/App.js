@@ -71,8 +71,9 @@ function App() {
   }
 
   // Process the letter input
-  const verifyLetter = () => {
-    setGameStage(stages[2].name)
+  // ****** Colocar verificação de acentos aqui!!
+  const verifyLetter = (letter) => {
+    console.log(letter)
   }
 
   // Restarts the game
